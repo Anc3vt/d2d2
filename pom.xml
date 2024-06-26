@@ -7,7 +7,7 @@
 
     <groupId>com.ancevt.d2d2</groupId>
     <artifactId>d2d2-framework</artifactId>
-    <version>0.1.6.4-SNAPSHOT</version>
+    <version>0.1.6.4</version>
 
     <name>D2D2 Framework</name>
 
@@ -67,7 +67,7 @@
         <lombok.version>1.18.26</lombok.version>
         <gson.version>2.9.1</gson.version>
         <args.version>2.1.4</args.version>
-        <ancevt-commons.version>1.0.4-SNAPSHOT</ancevt-commons.version>
+        <ancevt-commons.version>1.0.4</ancevt-commons.version>
         <logback.version>1.4.12</logback.version>
         <lwjgl.version>3.3.3</lwjgl.version>
         <lwjgl_util.version>2.9.3</lwjgl_util.version>

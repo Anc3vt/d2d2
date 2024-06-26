@@ -21,7 +21,7 @@ The goal of D2D2 is to create an easy-to-use framework for rapid development of 
     - [Framework Initialization](#framework-initialization)
     - [Sprite](#sprite)
     - [TextureManager](#texturemanager)
-    - [BitmapText](#bitmaptext)
+    - [Text](#text)
     - [Container](#container)
     - [Events](#events)
       - [Standard event types](#standard-event-types)
@@ -58,7 +58,7 @@ Additionally, you can develop and test your game mechanics with visualization on
 
 - **User Input Handling:** The framework provides tools for handling user input through input devices, making it easy to create interactive applications.
 
-- **Additional Tools and Utilities:** Additional tools are provided within the framework, including working with textureClips, sound, and other features.
+- **Additional Tools and Utilities:** Additional tools are provided within the framework, including working with texture clips, sound, and other features.
 
 # Dependency
 
@@ -72,16 +72,10 @@ In the `<repositories>` section:
     <repository>
         <id>ancevt</id>
         <url>https://packages.ancevt.com/releases</url>
-        <snapshots>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
     </repository>
     <repository>
         <id>ancevt-snapshot</id>
         <url>https://packages.ancevt.com/snapshots</url>
-        <snapshots>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
     </repository>
 </repositories>
 ```
@@ -93,13 +87,13 @@ And in the `<dependencies>` section:
 <dependency>
     <groupId>com.ancevt.d2d2</groupId>
     <artifactId>d2d2-framework</artifactId>
-    <version>0.1.6.3</version>
+    <version>0.1.6.4</version>
 </dependency>
 
 <dependency>
     <groupId>com.ancevt.d2d2</groupId>
     <artifactId>d2d2-lwjgl-opengl</artifactId>
-    <version>0.1.6.3</version>
+    <version>0.1.6.4</version>
 </dependency>
 ```
 
@@ -123,7 +117,7 @@ d2d2.window.title=Window title
 - `d2d2.window.width` and `d2d2.window.height` determine the initial dimensions of the application window.
 - `d2d2.window.title` defines the title of the application window.
 
-To initialize the framework, you need to implement the `D2D2Application` class and call the `D2D2.init(YourMainClass.class, args)` method, passing your class and application args[] into it . This class will be the entry point of your application. Then, you need to override the `onCreate` and `onDispose` methods. All the main logic of the application in the D2D2 paradigm should be defined in the `onCreate` method, as shown in the example below:
+To initialize the framework, you need to implement the `D2D2Application` interface and call `D2D2.init(YourMainClass.class, args)` method, passing your class and application args[] into it . This class will be the entry point of your application. Then, you need to implement the `onCreate` and `onDispose` methods. All the main logic of the application in the D2D2 paradigm should be defined in the `onCreate` method, as shown in the example below:
 
 ```java
 
@@ -192,7 +186,7 @@ Now the stage contains one display object, which is `Sprite`.
 
 ## TextureManager
 
-There's a more detailed and flexible way to manage texture resources - `TextureManager`. You can obtain the `TextureManager` by calling the static method `D2D2.textureManager()`. It contains all the loaded texture atlases. Texture atlases allow you to create texture atlases from source resource files where images are combined.
+There's a more detailed and flexible way to manage texture resources - `TextureManager`. You can obtain the `TextureManager` by calling the static method `D2D2.textureManager()`. It contains all the loaded textures. The texture manager allows you to create textures from source resource files where images are combined or not. You can splice you images by using texture clips.
 
 This way, you can store multiple images in a single PNG file, extracting the texture clips we need from it based on specified coordinates on the atlas.
 
@@ -209,9 +203,9 @@ public void onCreate(Stage stage) {
     // Get the texture manager from D2D2
     TextureManager textureManager = D2D2.textureManager();
     // Load the texture atlas from src/main/resources/assets/
-    TextureAtlas texture = textureManager.loadTextureAtlas("d2d2-samples-tileset.png");
+    Texture texture = textureManager.loadTexture("d2d2-samples-tileset.png");
     // Create a texture clip from the atlas with the specified coordinates and dimensions
-    TextureClip textureClip = texture.createTexture(256, 0, 144, 128);
+    TextureClip textureClip = texture.createTextureClip(256, 0, 144, 128);
     // Create a sprite using the created textureClip
     Sprite sprite = new SimpleSprite(textureClip);
 
@@ -252,18 +246,18 @@ Use these sizes to create texture atlases. For example, if you want to create a 
 
 The procedure for unloading texture atlases is the reverse of loading: `D2D2.textureManager().unloadTextureAtlas(texture)`.
 
-## BitmapText
+## Text
 
-Like `Sprite`, `BitmapText` is one of display objects, allowing text to be displayed on the scene. D2D2 supports runtime conversion of TrueType fonts into `BitmapFont`, which can be used in `BitmapText`.
+Like `Sprite`, `Text` is one of display objects, allowing text to be displayed on the scene. D2D2 supports runtime conversion of TrueType fonts into `Font`, which can be used in `Text`.
 
-### BitmapText with the default BitmapFont
+### Text with the default Font
 
 ```java
 
 @Override
 public void onCreate(Stage stage) {
-    BitmapText text1 = new BitmapText();
-    text1.setText("text1: Using default bitmap font\nSecond line...\nThird...");
+    Text text1 = new Text();
+    text1.setText("text1: Using default font\nSecond line...\nThird...");
     text1.setColor(Color.YELLOW);
     text1.setScale(2, 2);
     stage.addChild(text1, 100, 100);
@@ -274,18 +268,18 @@ It will look like this:
 
 ![BitmapText1](https://raw.githubusercontent.com/Anc3vt/d2d2-core/09a1f6658d3f0ea4219e5cd3f16c3e3ed6f75937/img/text1.png)
 
-### BitmapText with the TrueType font, using `TrueTypeBitmapFontBuilder`
+### Text with the TrueType font, using `TrueTypeFontBuilder`
 
 ```java
 public void onCreate(Stage stage) {
-    BitmapFont font = new TrueTypeBitmapFontBuilder()
+    Font font = new TrueTypeFontBuilder()
       .fontSize(24)
       .assetPath("d2d2ttf/FreeSansBold.ttf")
       .textAntialias(true)
       .build();
 
-    BitmapText text2 = new BitmapText(font);
-    text2.setText("text2: Using TtfBitmapFontBuilder generated bitmap font");
+    Text text2 = new Text(font);
+    text2.setText("text2: Using TrueTypeFontBuilder generated font");
     text2.setColor(Color.GREEN);
     stage.addChild(text2, 100, 200);
 }
@@ -297,23 +291,22 @@ It will look like this:
 
 ![BitmapText2](https://raw.githubusercontent.com/Anc3vt/d2d2-core/09a1f6658d3f0ea4219e5cd3f16c3e3ed6f75937/img/text2.png)
 
-### Multicolor BitmapText
+### Multicolor Text
 
 ```java
 public void onCreate(Stage stage) {
-    BitmapFont font = new TrueTypeBitmapFontBuilder()
+    Font font = new TrueTypeFontBuilder()
       .fontSize(24)
       .assetPath("d2d2ttf/FreeSansBold.ttf")
       .textAntialias(true)
       .build();
 
-    BitmapText text3 = new BitmapText(font);
+    Text text3 = new Text(font);
     // Enable multicolor
     text3.setMulticolorEnabled(true);
-    // Multicolor text should start with the `#` sign. It will not be rendered and will only signal
-    // to the bitmap text that it should be rendered using multicolor
-    text3.setText("#text3: <FF00FF>multicolor<FF99EE> bitmap<0000FF> text\n" +
-        "<AABBEE>The second line of bitmap text");
+    // Use hex <RRGGBB> format to define a color of following text
+    text3.setText("text3: <FF00FF>multicolor<FF99EE> text<0000FF> text\n" +
+        "<AABBEE>The second line of text");
 
     // place it on the stage
     stage.addChild(text3, 100, 300);
@@ -378,7 +371,7 @@ In D2D2, an event model similar to that in JavaScript and ActionScript is implem
 @Override
 public void onCreate(Stage stage) {
     // Create a status text for example convenience
-    BitmapText statusText = new BitmapText();
+    Text statusText = new Text();
     statusText.setScale(3, 3);
     stage.addChild(statusText, 10, 10);
 
@@ -389,7 +382,7 @@ public void onCreate(Stage stage) {
         float width = stage.getWidth();
         float height = stage.getHeight();
 
-        statusText.setText((int) width + "x" + (int) height);
+        statusText.setText(width + "x" + height);
     });
 }
 ```
@@ -515,7 +508,7 @@ Interactive objects are based on the event model described above. Here's an exam
 @Override
 public void onCreate(Stage stage) {
     // Create, setup, and add a text object for status display
-    BitmapText statusText = new BitmapText();
+    Text statusText = new Text();
     statusText.setScale(3, 3);
     stage.addChild(statusText, 300, 50);
 
