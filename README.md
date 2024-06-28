@@ -418,7 +418,7 @@ It will look like this (animated GIF):
 
 > **NOTE:** It's easy to notice that the sprite rotates around its top-left corner, which is the correct behavior for the example above. To make the object rotate around its own center, you need to add it to a container, move sprite to the left and up by half of its size, and then rotate the container instead of the sprite itself.
 
-Example of rotation around its own center:
+com.ancevt.learn.test.Example of rotation around its own center:
 
 ```java
 
