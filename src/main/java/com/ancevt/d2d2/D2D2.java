@@ -35,6 +35,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Properties;
 
 import static com.ancevt.commons.string.ConvertableString.convert;
@@ -59,6 +60,13 @@ public final class D2D2 {
 
         readPropertyFileIfExist();
         addCliArgsToSystemProperties(args);
+
+        if (Arrays.asList(args).contains("--lwjgl")) {
+            System.setProperty("d2d2.engine", "com.ancevt.d2d2.engine.lwjgl.LwjglEngine");
+            System.setProperty("d2d2.window.width", "1168");
+            System.setProperty("d2d2.window.height", "1000");
+            System.err.println("D2D2: `--lwjgl` default engine and window properties preset is set");
+        }
 
         Properties p = System.getProperties();
         String engineClassName = p.getProperty(SystemProperties.D2D2_ENGINE, NoRenderEngine.class.getName());

@@ -62,6 +62,7 @@ public class NoRenderEngine extends BaseEventDispatcher implements Engine {
         this.initialHeight = initialHeight;
         D2D2.textureManager().setTextureEngine(new NoRenderTextureEngine());
 
+        System.err.println("D2D2: No render engine is initialized");
     }
 
     @Override

@@ -44,7 +44,7 @@ public class Timer {
 
     private boolean alive;
 
-    public Timer(Consumer<Timer> func, long delay) {
+    public Timer(long delay, Consumer<Timer> func) {
         this.func = func;
         this.delay = delay;
     }
@@ -65,16 +65,16 @@ public class Timer {
         return timers.contains(this);
     }
 
-    public static Timer setInterval(Consumer<Timer> func, long delay) {
-        Timer timer = new Timer(func, delay);
+    public static Timer setInterval(long delay, Consumer<Timer> func) {
+        Timer timer = new Timer(delay, func);
         timer.setLoop(true);
         timers.add(timer);
         timer.start();
         return timer;
     }
 
-    public static Timer setTimeout(Consumer<Timer> func, long delay) {
-        Timer timer = new Timer(func, delay);
+    public static Timer setTimeout(long delay, Consumer<Timer> func) {
+        Timer timer = new Timer(delay, func);
         timer.setLoop(false);
         timers.add(timer);
         timer.start();
