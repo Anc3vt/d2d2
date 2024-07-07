@@ -18,8 +18,12 @@
 package com.ancevt.d2d2.event;
 
 import com.ancevt.d2d2.display.Container;
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @SuperBuilder
@@ -41,6 +45,9 @@ public class Event {
     Object source;
     private Container parent;
 
+    @Builder.Default
+    private Map<String, Object> extra = new HashMap<String, Object>();
+
     public <T> T casted() {
         return (T) this;
     }
@@ -50,6 +57,7 @@ public class Event {
         return getClass().getSimpleName() + "{" +
             "type='" + type + '\'' +
             ", source=" + source +
+            ", extra=" + extra +
             '}';
     }
 }
