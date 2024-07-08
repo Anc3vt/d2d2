@@ -71,29 +71,7 @@ public class TextureClipCombiner {
         return cell;
     }
 
-    public final TextureClipCombinerCell append(int x, int y, Color color, float alpha) {
-        final TextureClipCombinerCell cell = new TextureClipCombinerCell();
-        cell.setAlpha(alpha);
-        cell.setPixel(true);
-        cell.setColor(color);
-        cell.setX(x);
-        cell.setY(y);
-        cell.setId(cellIdCounter++);
-        cells.add(cell);
 
-        return cell;
-    }
-
-    public final TextureClipCombinerCell append(int x, int y, Color color) {
-        final TextureClipCombinerCell cell = new TextureClipCombinerCell();
-        cell.setPixel(true);
-        cell.setColor(color);
-        cell.setX(x);
-        cell.setY(y);
-        cell.setId(cellIdCounter++);
-        cells.add(cell);
-        return cell;
-    }
 
     public final TextureClipCombinerCell append(
         final TextureClip textureClip,

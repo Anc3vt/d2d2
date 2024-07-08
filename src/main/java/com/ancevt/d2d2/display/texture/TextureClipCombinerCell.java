@@ -22,8 +22,6 @@ import com.ancevt.d2d2.display.Color;
 public class TextureClipCombinerCell {
     private Color color;
 
-    private boolean pixel;
-
     private int id;
     private int x;
     private int y;
@@ -43,14 +41,6 @@ public class TextureClipCombinerCell {
 
     public void setColor(Color color) {
         this.color = color;
-    }
-
-    public boolean isPixel() {
-        return pixel;
-    }
-
-    public void setPixel(boolean pixel) {
-        this.pixel = pixel;
     }
 
     public int getId() {
@@ -137,7 +127,6 @@ public class TextureClipCombinerCell {
     public String toString() {
         return getClass().getSimpleName() + "{" +
             "color=" + color +
-            ", pixel=" + pixel +
             ", id=" + id +
             ", x=" + x +
             ", y=" + y +

@@ -56,11 +56,27 @@ public class Texture implements Disposable {
      * @return
      */
     public TextureClip createTextureClip(String textureClipCoords) {
-        if(textureClipCoords.contains(";")) {
+        if (textureClipCoords.contains(";")) {
             textureClipCoords = textureClipCoords.split(";")[0];
         }
         var a = Args.of(textureClipCoords, ',');
-        return new TextureClip(this, a.next(int.class), a.next(int.class), a.next(int.class), a.next(int.class));
+
+        int x = a.get(int.class, 0);
+        int y = a.get(int.class, 1);
+        int w = a.get(int.class, 2);
+        String hString = a.get(String.class, 3);
+
+        if (hString.contains("h")) {
+            hString = hString.substring(0, hString.indexOf('h'));
+        }
+
+        if (hString.contains("v")) {
+            hString = hString.substring(0, hString.indexOf('v'));
+        }
+
+        int h = Integer.parseInt(hString);
+
+        return new TextureClip(this, x, y, w, h);
     }
 
     public static String convertCoords(String textureClipCoords) {
@@ -162,12 +178,7 @@ public class Texture implements Disposable {
 
     private static int[] get4Values(String coords) {
         String[] split = coords.split(",");
-        return new int[]{
-            parseInt(split[0]),
-            parseInt(split[1]),
-            parseInt(split[2]),
-            parseInt(split[3]),
-        };
+        return new int[]{parseInt(split[0]), parseInt(split[1]), parseInt(split[2]), parseInt(split[3]),};
     }
 
     public int getId() {
@@ -193,12 +204,7 @@ public class Texture implements Disposable {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "{" +
-            "id=" + id +
-            ", width=" + width +
-            ", height=" + height +
-            ", disposed=" + isDisposed() +
-            '}';
+        return this.getClass().getSimpleName() + "{" + "id=" + id + ", width=" + width + ", height=" + height + ", disposed=" + isDisposed() + '}';
     }
 
 }
