@@ -110,6 +110,7 @@ public class InteractiveManager {
                     .x(e.getX())
                     .y(e.getY())
                     .control(e.isControl())
+                    .alt(e.isAlt())
                     .build());
             }
         });
