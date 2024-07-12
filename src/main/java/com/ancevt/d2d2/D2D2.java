@@ -23,6 +23,7 @@ import com.ancevt.d2d2.display.text.BitmapFontManager;
 import com.ancevt.d2d2.display.texture.TextureManager;
 import com.ancevt.d2d2.engine.DisplayManager;
 import com.ancevt.d2d2.engine.Engine;
+import com.ancevt.d2d2.engine.SoundManager;
 import com.ancevt.d2d2.engine.norender.NoRenderEngine;
 import com.ancevt.d2d2.event.Event;
 import com.ancevt.d2d2.input.Mouse;
@@ -177,6 +178,10 @@ public final class D2D2 {
 
     public static DisplayManager displayManager() {
         return engine.displayManager();
+    }
+
+    public static SoundManager soundManager() {
+        return engine().soundManager();
     }
 
 }

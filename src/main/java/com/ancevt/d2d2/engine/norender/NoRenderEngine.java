@@ -24,6 +24,7 @@ import com.ancevt.d2d2.display.text.Font;
 import com.ancevt.d2d2.display.text.TrueTypeFontBuilder;
 import com.ancevt.d2d2.engine.DisplayManager;
 import com.ancevt.d2d2.engine.Engine;
+import com.ancevt.d2d2.engine.SoundManager;
 import com.ancevt.d2d2.event.BaseEventDispatcher;
 import com.ancevt.d2d2.event.Event;
 import com.ancevt.d2d2.event.EventPool;
@@ -57,6 +58,8 @@ public class NoRenderEngine extends BaseEventDispatcher implements Engine {
     @Setter
     private int timerCheckFrameFrequency = 100;
 
+    private SoundManager soundManager;
+
     public NoRenderEngine(int initialWidth, int initialHeight, String title) {
         this.initialWidth = initialWidth;
         this.initialHeight = initialHeight;
@@ -81,6 +84,14 @@ public class NoRenderEngine extends BaseEventDispatcher implements Engine {
     @Override
     public DisplayManager displayManager() {
         return new NoRenderDisplayManagerStub();
+    }
+
+    @Override
+    public SoundManager soundManager() {
+        if (soundManager == null) {
+            soundManager = new NoRenderSoundManager();
+        }
+        return soundManager;
     }
 
     @Override

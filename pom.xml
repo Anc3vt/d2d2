@@ -62,8 +62,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
 
-        <vorbisspi.version>1.0.3.3</vorbisspi.version>
-        <mp3spi.version>1.9.5.4</mp3spi.version>
         <lombok.version>1.18.26</lombok.version>
         <gson.version>2.9.1</gson.version>
         <args.version>2.1.4</args.version>
@@ -97,16 +95,6 @@
             <groupId>com.ancevt.util</groupId>
             <artifactId>args</artifactId>
             <version>${args.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.soundlibs</groupId>
-            <artifactId>mp3spi</artifactId>
-            <version>${mp3spi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.soundlibs</groupId>
-            <artifactId>vorbisspi</artifactId>
-            <version>${vorbisspi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.l33tlabs.twl</groupId>

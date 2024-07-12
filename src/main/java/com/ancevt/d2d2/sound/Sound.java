@@ -17,11 +17,9 @@
  */
 package com.ancevt.d2d2.sound;
 
-import com.ancevt.d2d2.asset.Assets;
+import com.ancevt.d2d2.common.Disposable;
 
-import java.io.InputStream;
-
-public interface Sound {
+public interface Sound extends Disposable {
 
     void play();
 
@@ -36,32 +34,4 @@ public interface Sound {
     void setPan(float pan);
 
     float getPan();
-
-    static Sound loadSound(InputStream inputStream) {
-        return new SampledSound(inputStream);
-    }
-
-
-    static Sound lookupSound(String path) {
-        Sound sound = SoundCache.sounds.get(path);
-        if (sound == null) {
-            sound = new SampledSound(path);
-            SoundCache.sounds.put(path, sound);
-        }
-        return sound;
-    }
-
-    static Sound lookupSoundAsset(String path) {
-        Sound sound = SoundCache.sounds.get(':' + path);
-        if (sound == null) {
-            sound = new SampledSound(Assets.getAsset(path));
-            SoundCache.sounds.put(':' + path, sound);
-        }
-        return sound;
-    }
-
-    static void clearCache() {
-        SoundCache.sounds.clear();
-    }
-
 }

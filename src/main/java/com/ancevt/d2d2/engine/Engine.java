@@ -61,6 +61,8 @@ public interface Engine extends EventDispatcher {
 
     DisplayManager displayManager();
 
+    SoundManager soundManager();
+
     void setCursorXY(int x, int y);
 
     void setCanvasSize(int width, int height);
