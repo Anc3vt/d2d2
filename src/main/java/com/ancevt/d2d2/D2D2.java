@@ -56,6 +56,8 @@ public final class D2D2 {
     @Getter
     private static Args args;
 
+    private static boolean noScaleMode;
+
     public static void init(Class<? extends D2D2Application> d2d2EntryPointClass, String[] args) {
         D2D2.args = Args.of(args);
 
@@ -184,4 +186,18 @@ public final class D2D2 {
         return engine().soundManager();
     }
 
+    public static void setNoScaleMode(boolean noScaleMode) {
+        D2D2.noScaleMode = noScaleMode;
+
+        engine().removeEventListener(D2D2.class, Event.RESIZE);
+        if (noScaleMode) {
+            engine().addEventListener(D2D2.class, Event.RESIZE, event ->
+                stage().setSize(engine().getCanvasWidth(), engine().getCanvasHeight())
+            );
+        }
+    }
+
+    public static boolean isNoScaleMode() {
+        return noScaleMode;
+    }
 }
