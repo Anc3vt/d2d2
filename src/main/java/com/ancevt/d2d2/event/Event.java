@@ -18,11 +18,9 @@
 package com.ancevt.d2d2.event;
 
 import com.ancevt.d2d2.display.Container;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -36,6 +34,7 @@ public class Event {
     public static final String REMOVE            = "remove";
     public static final String ADD_TO_STAGE      = "addToStage";
     public static final String REMOVE_FROM_STAGE = "removeFromStage";
+    public static final String START             = "start";
     public static final String COMPLETE          = "complete";
     public static final String RESIZE            = "resize";
     public static final String CHANGE            = "change";
