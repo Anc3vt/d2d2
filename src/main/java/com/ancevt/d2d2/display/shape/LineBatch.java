@@ -34,7 +34,6 @@ public class LineBatch extends BaseDisplayObject implements Shape {
     @Getter
     private float lineWidth = 1f;
 
-
     @Getter
     @Setter
     private int stippleFactor = 1;

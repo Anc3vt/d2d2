@@ -2,13 +2,13 @@
  * Copyright (C) 2024 the original author or authors.
  * See the notice.md file distributed with this work for additional
  * information regarding copyright ownership.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -74,13 +74,23 @@ public class InteractiveSprite extends SimpleSprite implements Interactive {
 
     @Override
     public void setX(float value) {
-        interactiveArea.setUp(value, interactiveArea.getY(), interactiveArea.getWidth(), interactiveArea.getHeight());
+        interactiveArea.setUp(
+                value,
+                interactiveArea.getY(),
+                interactiveArea.getWidth(),
+                interactiveArea.getHeight()
+        );
         super.setX(value);
     }
 
     @Override
     public void setY(float value) {
-        interactiveArea.setUp(interactiveArea.getX(), value, interactiveArea.getWidth(), interactiveArea.getHeight());
+        interactiveArea.setUp(
+                interactiveArea.getX(),
+                value,
+                interactiveArea.getWidth(),
+                interactiveArea.getHeight()
+        );
         super.setY(value);
     }
 
@@ -173,8 +183,6 @@ public class InteractiveSprite extends SimpleSprite implements Interactive {
     public boolean isFocused() {
         return InteractiveManager.getInstance().getFocused() == this;
     }
-
-
 
     @Override
     public void dispose() {

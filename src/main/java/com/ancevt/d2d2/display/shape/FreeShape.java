@@ -1,15 +1,12 @@
 package com.ancevt.d2d2.display.shape;
 
+import com.ancevt.d2d2.Earcut;
 import com.ancevt.d2d2.display.BaseDisplayObject;
 import com.ancevt.d2d2.display.Color;
 import com.ancevt.d2d2.display.Colored;
 import com.ancevt.d2d2.display.texture.Texture;
 import lombok.Getter;
 import lombok.Setter;
-import org.poly2tri.Poly2Tri;
-import org.poly2tri.geometry.polygon.Polygon;
-import org.poly2tri.geometry.polygon.PolygonPoint;
-import org.poly2tri.triangulation.delaunay.DelaunayTriangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,7 @@ import java.util.List;
 @Getter
 public class FreeShape extends BaseDisplayObject implements Shape, Colored {
 
+    @Getter
     private List<Vertex> vertices = new ArrayList<>();
 
     @Setter
@@ -33,10 +31,12 @@ public class FreeShape extends BaseDisplayObject implements Shape, Colored {
     private List<Triangle> triangles = new ArrayList<>();
 
 
-    public void vertex(float x, float y) {
+    public Vertex addVertex(float x, float y) {
         this.currentX = x;
         this.currentY = y;
-        vertices.add(new Vertex(x, y));
+        var result = new Vertex(x, y);
+        vertices.add(result);
+        return result;
     }
 
     public void curveTo(float controlX1, float controlY1, float controlX2, float controlY2, float endX, float endY, float step) {
@@ -44,14 +44,14 @@ public class FreeShape extends BaseDisplayObject implements Shape, Colored {
         while (t <= 1.0f) {
             float oneMinusT = 1.0f - t;
             float x = oneMinusT * oneMinusT * oneMinusT * currentX +
-                3 * oneMinusT * oneMinusT * t * controlX1 +
-                3 * oneMinusT * t * t * controlX2 +
-                t * t * t * endX;
+                    3 * oneMinusT * oneMinusT * t * controlX1 +
+                    3 * oneMinusT * t * t * controlX2 +
+                    t * t * t * endX;
             float y = oneMinusT * oneMinusT * oneMinusT * currentY +
-                3 * oneMinusT * oneMinusT * t * controlY1 +
-                3 * oneMinusT * t * t * controlY2 +
-                t * t * t * endY;
-            vertex(x, y);
+                    3 * oneMinusT * oneMinusT * t * controlY1 +
+                    3 * oneMinusT * t * t * controlY2 +
+                    t * t * t * endY;
+            addVertex(x, y);
             this.currentX = x;
             this.currentY = y;
             t += step;
@@ -67,7 +67,7 @@ public class FreeShape extends BaseDisplayObject implements Shape, Colored {
 
     public void closePath() {
         var begin = vertices.get(0);
-        vertex(begin.getX(), begin.getY());
+        addVertex(begin.getX(), begin.getY());
     }
 
     public FreeShape copy() {
@@ -88,43 +88,39 @@ public class FreeShape extends BaseDisplayObject implements Shape, Colored {
         return copy;
     }
 
-    public void compile() {
+    public void commit() {
         triangles.clear();
 
-        List<PolygonPoint> polygonPoints = new ArrayList<>();
+        List<Double> coords = new ArrayList<>();
         for (Vertex vertex : vertices) {
-            PolygonPoint polygonPoint = new PolygonPoint(vertex.x, vertex.y);
-            polygonPoints.add(polygonPoint);
+            coords.add((double) vertex.x);
+            coords.add((double) vertex.y);
         }
-        Polygon polygon = new Polygon(polygonPoints);
 
-        Poly2Tri.triangulate(polygon);
+        double[] array = coords.stream()
+                .mapToDouble(Double::doubleValue)
+                .toArray();
 
-        List<DelaunayTriangle> result = polygon.getTriangles();
-        for (DelaunayTriangle delaunayTriangle : result) {
-            triangles.add(
-                new Triangle(
-                    delaunayTriangle.points[0].getXf(),
-                    delaunayTriangle.points[0].getYf(),
-                    delaunayTriangle.points[1].getXf(),
-                    delaunayTriangle.points[1].getYf(),
-                    delaunayTriangle.points[2].getXf(),
-                    delaunayTriangle.points[2].getYf()
-                )
+        List<Integer> indices = Earcut.earcut(array);
+
+        int[] indicesArray = indices.stream()
+                .mapToInt(Integer::intValue)
+                .toArray();
+
+        for (int i = 0; i < indicesArray.length; i += 3) {
+            int idx1 = indicesArray[i] * 2;
+            int idx2 = indicesArray[i + 1] * 2;
+            int idx3 = indicesArray[i + 2] * 2;
+
+            Triangle t = new Triangle(
+                    (float) array[idx1], (float) array[idx1 + 1],
+                    (float) array[idx2], (float) array[idx2 + 1],
+                    (float) array[idx3], (float) array[idx3 + 1]
             );
+            triangles.add(t);
         }
+
+
     }
-
-
-    /*
-        // Prepare input data
-        Polygon polygon = new Polygon(Arrays.asList(new PolygonPoint(0, 0, 0),
-          new PolygonPoint(10, 0, 1),new PolygonPoint(10, 10, 2),new PolygonPoint(0, 10, 3)));
-        // Launch tessellation
-        Poly2Tri.triangulate(polygon);
-        // Gather triangles
-        List<DelaunayTriangle> triangles = polygon.getTriangles();
-      }
-     */
 
 }

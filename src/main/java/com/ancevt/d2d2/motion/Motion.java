@@ -19,7 +19,6 @@ public class Motion<N extends Number> extends BaseEventDispatcher {
     private final N step;
     @Getter
     private State state;
-
     private final Consumer<N> applyFunction;
     private N currentValue;
     private final NumberOperations<N> numberOperations;
@@ -46,7 +45,7 @@ public class Motion<N extends Number> extends BaseEventDispatcher {
         D2D2.stage().removeEventListener(this, Event.LOOP_UPDATE);
         D2D2.stage().addEventListener(this, Event.LOOP_UPDATE, this::stage_loopUpdate);
         dispatchEvent(Event.builder().type(Event.START).build());
-        state = IN_ACTION;
+        state = IN_PROCESS;
     }
 
     public void stop() {
@@ -101,8 +100,7 @@ public class Motion<N extends Number> extends BaseEventDispatcher {
 
     enum State {
         NEW,
-        IN_ACTION,
+        IN_PROCESS,
         COMPLETE
     }
 }
-

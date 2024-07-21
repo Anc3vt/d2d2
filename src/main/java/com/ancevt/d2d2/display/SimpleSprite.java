@@ -18,6 +18,7 @@
 package com.ancevt.d2d2.display;
 
 import com.ancevt.d2d2.D2D2;
+import com.ancevt.d2d2.display.texture.Texture;
 import com.ancevt.d2d2.display.texture.TextureClip;
 
 public class SimpleSprite extends BaseDisplayObject implements Sprite {
@@ -59,6 +60,10 @@ public class SimpleSprite extends BaseDisplayObject implements Sprite {
 
         setColor(DEFAULT_COLOR);
         setRepeat(1, 1);
+    }
+
+    public SimpleSprite(Texture texture) {
+        this(texture.createTextureClip());
     }
 
     @Override

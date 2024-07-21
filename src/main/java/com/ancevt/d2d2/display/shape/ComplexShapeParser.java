@@ -51,7 +51,7 @@ public class ComplexShapeParser {
                 StringTokenizer stringTokenizer = new StringTokenizer(line, " ");
                 float x = Float.parseFloat(stringTokenizer.nextToken());
                 float y = Float.parseFloat(stringTokenizer.nextToken());
-                shape.get().vertex(x, y);
+                shape.get().addVertex(x, y);
             }
         });
 
