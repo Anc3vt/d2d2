@@ -1,6 +1,5 @@
 package com.ancevt.d2d2.display.shape;
 
-import com.ancevt.d2d2.Earcut;
 import com.ancevt.d2d2.display.BaseDisplayObject;
 import com.ancevt.d2d2.display.Color;
 import com.ancevt.d2d2.display.Colored;

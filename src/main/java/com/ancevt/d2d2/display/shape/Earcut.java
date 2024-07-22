@@ -16,7 +16,7 @@
  * THIS SOFTWARE.
  */
 
-package com.ancevt.d2d2;
+package com.ancevt.d2d2.display.shape;
 
 import java.util.ArrayList;
 import java.util.Comparator;
