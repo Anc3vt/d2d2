@@ -19,6 +19,7 @@ package com.ancevt.d2d2.display.interactive;
 
 import com.ancevt.d2d2.display.SimpleContainer;
 import com.ancevt.d2d2.display.DisplayObject;
+import com.ancevt.d2d2.display.shape.FreeShape;
 import com.ancevt.d2d2.event.Event;
 import com.ancevt.d2d2.exception.InteractiveException;
 
@@ -33,6 +34,8 @@ public class InteractiveContainer extends SimpleContainer implements Interactive
     private boolean tabbingEnabled;
     private boolean disposed;
     private boolean pushEventsUp;
+
+    private FreeShape interactiveFreeShape;
 
     public InteractiveContainer(float width, float height) {
         interactiveArea = new InteractiveArea(0, 0, width, height);
@@ -50,6 +53,16 @@ public class InteractiveContainer extends SimpleContainer implements Interactive
         this();
         addChild(wrappingDisplayObject);
         setSize(wrappingDisplayObject.getWidth(), wrappingDisplayObject.getHeight());
+    }
+
+    @Override
+    public void setInteractiveFreeShape(FreeShape interactiveFreeShape) {
+        this.interactiveFreeShape = interactiveFreeShape;
+    }
+
+    @Override
+    public FreeShape getInteractiveFreeShape() {
+        return interactiveFreeShape;
     }
 
     @Override

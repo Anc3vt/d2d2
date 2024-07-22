@@ -17,6 +17,7 @@
  */
 package com.ancevt.d2d2.display.interactive;
 
+import com.ancevt.d2d2.display.shape.FreeShape;
 import com.ancevt.d2d2.display.texture.TextureClip;
 import com.ancevt.d2d2.event.Event;
 import com.ancevt.d2d2.display.SimpleSprite;
@@ -32,6 +33,8 @@ public class InteractiveSprite extends SimpleSprite implements Interactive {
     private boolean hovering;
     private boolean disposed;
     private boolean pushEventUp;
+
+    private FreeShape freeShape;
 
     public InteractiveSprite() {
         interactiveArea = new InteractiveArea(0, 0, 0, 0);
@@ -50,12 +53,21 @@ public class InteractiveSprite extends SimpleSprite implements Interactive {
         setDefaultName();
     }
 
-    public InteractiveSprite(String textureKey) {
-        super(textureKey);
+    public InteractiveSprite(String texture) {
+        super(texture);
         interactiveArea = new InteractiveArea(0, 0, getTextureClip().getWidth(), getTextureClip().getHeight());
         enabled = true;
         pushEventUp = true;
         InteractiveManager.getInstance().registerInteractive(this);
+    }
+
+    @Override
+    public void setInteractiveFreeShape(FreeShape freeShape) {
+        this.freeShape = freeShape;
+    }
+
+    public FreeShape getInteractiveFreeShape() {
+        return freeShape;
     }
 
     @Override
