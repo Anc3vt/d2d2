@@ -70,4 +70,6 @@ public interface Engine extends EventDispatcher {
     int getCanvasWidth();
 
     int getCanvasHeight();
+
+    ShaderFactory shaderFactory();
 }

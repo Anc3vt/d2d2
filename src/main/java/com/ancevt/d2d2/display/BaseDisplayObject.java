@@ -17,6 +17,7 @@
  */
 package com.ancevt.d2d2.display;
 
+import com.ancevt.d2d2.display.shader.ShaderProgram;
 import com.ancevt.d2d2.event.BaseEventDispatcher;
 
 public abstract class BaseDisplayObject extends BaseEventDispatcher implements DisplayObject {
@@ -35,9 +36,20 @@ public abstract class BaseDisplayObject extends BaseEventDispatcher implements D
     private int zOrderIndex;
     private boolean integerPixelAlignmentEnabled = true;
 
+    private ShaderProgram shaderProgram;
+
     protected BaseDisplayObject() {
         displayObjectId = displayObjectIdCounter++;
         name = "_" + getClass().getSimpleName() + getDisplayObjectId();
+    }
+
+    public ShaderProgram getShaderProgram() {
+        return shaderProgram;
+    }
+
+    @Override
+    public void setShaderProgram(ShaderProgram shaderProgram) {
+        this.shaderProgram = shaderProgram;
     }
 
     @Override

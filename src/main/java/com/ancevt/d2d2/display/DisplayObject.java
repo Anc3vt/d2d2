@@ -17,9 +17,14 @@
  */
 package com.ancevt.d2d2.display;
 
+import com.ancevt.d2d2.display.shader.ShaderProgram;
 import com.ancevt.d2d2.event.EventDispatcher;
 
 public interface DisplayObject extends EventDispatcher {
+
+    void setShaderProgram(ShaderProgram shaderProgram);
+
+    ShaderProgram getShaderProgram();
 
     default void centerX() {
         if (hasParent()) {
@@ -149,7 +154,6 @@ public interface DisplayObject extends EventDispatcher {
     boolean isIntegerPixelAlignmentEnabled();
 
     String toString();
-
 
     default void onExitFrame() {}
 

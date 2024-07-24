@@ -70,6 +70,7 @@
         <lwjgl.version>3.3.3</lwjgl.version>
         <lwjgl_util.version>2.9.3</lwjgl_util.version>
         <pngdecoder.version>1.0</pngdecoder.version>
+        <ini.version>1.0.0</ini.version>
 
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
@@ -90,6 +91,11 @@
             <groupId>com.ancevt.commons</groupId>
             <artifactId>ancevt-commons</artifactId>
             <version>${ancevt-commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ancevt.ini</groupId>
+            <artifactId>ini</artifactId>
+            <version>${ini.version}</version>
         </dependency>
         <dependency>
             <groupId>com.ancevt.util</groupId>

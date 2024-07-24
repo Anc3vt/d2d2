@@ -3,6 +3,7 @@ package com.ancevt.d2d2.display.shape;
 import com.ancevt.d2d2.display.BaseDisplayObject;
 import com.ancevt.d2d2.display.Color;
 import com.ancevt.d2d2.display.Colored;
+import com.ancevt.d2d2.display.shader.ShaderProgram;
 import com.ancevt.d2d2.display.texture.Texture;
 import lombok.Getter;
 import lombok.Setter;

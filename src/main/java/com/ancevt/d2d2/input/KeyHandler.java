@@ -12,10 +12,10 @@ public class KeyHandler {
     private final int mods;
     private final EventDispatcher eventDispatcher;
     private final int keyAlias;
-    public Consumer<Options> onKeyDown;
-    public Consumer<Options> onKeyUp;
-    public Consumer<Options> onKeyRepeat;
-    public Consumer<Options> onKeyType;
+    private Consumer<Options> onKeyDown;
+    private Consumer<Options> onKeyUp;
+    private Consumer<Options> onKeyRepeat;
+    private Consumer<Options> onKeyType;
 
     @Getter
     private boolean enabled;

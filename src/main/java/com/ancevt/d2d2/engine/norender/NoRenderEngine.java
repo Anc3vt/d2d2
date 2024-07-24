@@ -24,11 +24,13 @@ import com.ancevt.d2d2.display.text.Font;
 import com.ancevt.d2d2.display.text.TrueTypeFontBuilder;
 import com.ancevt.d2d2.engine.DisplayManager;
 import com.ancevt.d2d2.engine.Engine;
+import com.ancevt.d2d2.engine.ShaderFactory;
 import com.ancevt.d2d2.engine.SoundManager;
 import com.ancevt.d2d2.event.BaseEventDispatcher;
 import com.ancevt.d2d2.event.Event;
 import com.ancevt.d2d2.event.EventPool;
 import com.ancevt.d2d2.event.LifecycleEvent;
+import com.ancevt.d2d2.exception.NotImplementedException;
 import com.ancevt.d2d2.input.Mouse;
 import com.ancevt.d2d2.time.Timer;
 import lombok.Getter;
@@ -79,6 +81,12 @@ public class NoRenderEngine extends BaseEventDispatcher implements Engine {
         canvasHeight = height;
 
         dispatchEvent(EventPool.simpleEventSingleton(Event.RESIZE, this));
+    }
+
+    @Override
+    public ShaderFactory shaderFactory() {
+        // TODO: implement stub
+        throw new NotImplementedException();
     }
 
     @Override

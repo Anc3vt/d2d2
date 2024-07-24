@@ -19,7 +19,6 @@ package com.ancevt.d2d2.display.interactive;
 
 import com.ancevt.d2d2.D2D2;
 import com.ancevt.d2d2.display.shape.FreeShape;
-import com.ancevt.d2d2.display.shape.Vertex;
 import com.ancevt.d2d2.event.Event;
 import com.ancevt.d2d2.event.InteractiveEvent;
 import com.ancevt.d2d2.input.KeyCode;
@@ -577,11 +576,11 @@ public class InteractiveManager {
         focusedInteractive = null;
     }
 
-    private static void dispatch(Interactive interactive, InteractiveEvent event) {
-        if (!interactive.isEnabled() || !interactive.isAbsoluteVisible()) return;
+    private static void dispatch(Interactive eventDispatcher, InteractiveEvent event) {
+        if (!eventDispatcher.isEnabled() || !eventDispatcher.isAbsoluteVisible()) return;
 
-        interactive.dispatchEvent(event);
-        if (interactive.isPushEventsUp() && interactive.getParent() instanceof Interactive parent) {
+        eventDispatcher.dispatchEvent(event);
+        if (eventDispatcher.getParent() instanceof Interactive parent) {
             dispatch(parent, event);
         }
     }

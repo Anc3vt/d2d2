@@ -18,6 +18,7 @@
 package com.ancevt.d2d2.display;
 
 import com.ancevt.d2d2.D2D2;
+import com.ancevt.d2d2.display.shader.ShaderProgram;
 import com.ancevt.d2d2.display.texture.Texture;
 import com.ancevt.d2d2.display.texture.TextureClip;
 
@@ -31,6 +32,7 @@ public class SimpleSprite extends BaseDisplayObject implements Sprite {
     private TextureClip textureClip;
     private double vertexBleedingFix = 0d;
     private double textureBleedingFix = 0d;
+    private ShaderProgram shaderProgram;
 
     public SimpleSprite() {
         setColor(DEFAULT_COLOR);
@@ -64,6 +66,16 @@ public class SimpleSprite extends BaseDisplayObject implements Sprite {
 
     public SimpleSprite(Texture texture) {
         this(texture.createTextureClip());
+    }
+
+    @Override
+    public ShaderProgram getShaderProgram() {
+        return shaderProgram;
+    }
+
+    @Override
+    public void setShaderProgram(ShaderProgram shaderProgram) {
+        this.shaderProgram = shaderProgram;
     }
 
     @Override
