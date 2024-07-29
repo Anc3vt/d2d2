@@ -17,7 +17,6 @@
  */
 package com.ancevt.d2d2.display;
 
-import com.ancevt.d2d2.D2D2;
 import com.ancevt.d2d2.display.texture.TextureClip;
 
 public interface Sprite extends DisplayObject, Colored, Repeatable {

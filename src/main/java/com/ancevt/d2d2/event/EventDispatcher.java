@@ -17,11 +17,15 @@
  */
 package com.ancevt.d2d2.event;
 
+import java.util.Map;
+
 public interface EventDispatcher {
 
     void addEventListener(String type, EventListener listener);
 
     void removeEventListener(String type, EventListener listener);
+
+    void dispatchEvent(String type, Map<String, Object> extra);
 
     void dispatchEvent(Event event);
 

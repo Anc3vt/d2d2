@@ -37,7 +37,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
-public class ByteBaseDisplay extends InteractiveContainer {
+public class ByteDisplay extends InteractiveContainer {
 
     private static final float DEFAULT_WIDTH = 580.0f;
     private static final float DEFAULT_HEIGHT = 400.0f;
@@ -64,7 +64,7 @@ public class ByteBaseDisplay extends InteractiveContainer {
     private String utfString;
     private int inline, line;
 
-    public ByteBaseDisplay() {
+    public ByteDisplay() {
         super(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         bgRect = new BorderedRectangle(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_BG_COLOR, DEFAULT_BORDER_COLOR);
         addChild(bgRect);
@@ -126,13 +126,13 @@ public class ByteBaseDisplay extends InteractiveContainer {
                 setUnsigned(!isUnsigned());
             }
             case KeyCode.BACKSPACE -> {
-                if (gotoIndexString.length() > 0) {
+                if (!gotoIndexString.isEmpty()) {
                     gotoIndexString = gotoIndexString.substring(0, gotoIndexString.length() - 1);
                     render();
                 }
             }
             case KeyCode.ENTER -> {
-                if (gotoIndexString.length() > 0) {
+                if (!gotoIndexString.isEmpty()) {
                     int targetPosition = Integer.parseInt(gotoIndexString);
                     setPosition(targetPosition);
                     gotoIndexString = "";
@@ -411,14 +411,14 @@ public class ByteBaseDisplay extends InteractiveContainer {
         s.append(line).append("\n");
     }
 
-    public static ByteBaseDisplay show(byte[] bytes) {
-        ByteBaseDisplay result = new ByteBaseDisplay();
+    public static ByteDisplay show(byte[] bytes) {
+        ByteDisplay result = new ByteDisplay();
         result.setBytes(bytes);
         D2D2.stage().addChild(result, 100 + new Random().nextInt(100), 100 + new Random().nextInt(100));
         return result;
     }
 
-    public static ByteBaseDisplay show(InputStream inputStream) {
+    public static ByteDisplay show(InputStream inputStream) {
         InputStreamFork fork = InputStreamFork.fork(inputStream);
         try {
             byte[] bytes = fork.left().readAllBytes();

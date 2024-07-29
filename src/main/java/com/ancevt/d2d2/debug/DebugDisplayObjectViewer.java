@@ -45,7 +45,6 @@ public class DebugDisplayObjectViewer {
     private Container targetContainer;
     private boolean keyListenerEnabled;
 
-    @Builder.Default
     private int depth = -1;
 
     public DebugDisplayObjectViewer() {

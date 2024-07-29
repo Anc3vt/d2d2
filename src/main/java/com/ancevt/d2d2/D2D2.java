@@ -2,13 +2,13 @@
  * Copyright (C) 2024 the original author or authors.
  * See the notice.md file distributed with this work for additional
  * information regarding copyright ownership.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,7 +44,7 @@ import static com.ancevt.commons.string.ConvertableString.convert;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class D2D2 {
-    private static final String PROPERTIES_FILENAME = "application.properties";
+    private static final String DEFAULT_PROPERTIES_FILE_NAME = "application.properties";
 
     private static final TextureManager textureManager = new TextureManager();
 
@@ -60,13 +60,21 @@ public final class D2D2 {
     private static boolean noScaleMode;
 
     public static void init(Class<? extends D2D2Application> d2d2EntryPointClass, String[] args) {
-        init(d2d2EntryPointClass, args, Map.of());
+        init(d2d2EntryPointClass, args, DEFAULT_PROPERTIES_FILE_NAME, Map.of());
     }
 
-    public static void init(Class<? extends D2D2Application> d2d2EntryPointClass, String[] args, Map<String, String> properties) {
+    public static void init(Class<? extends D2D2Application> d2d2EntryPointClass, String[] args, String propertiesResourceFileName) {
+        init(d2d2EntryPointClass, args, propertiesResourceFileName, Map.of());
+    }
+
+    public static void init(Class<? extends D2D2Application> d2d2EntryPointClass,
+                            String[] args,
+                            String propertiesResourceFileName,
+                            Map<String, String> properties
+    ) {
         D2D2.args = Args.of(args);
 
-        readPropertyFileIfExist();
+        readPropertyFileIfExist(propertiesResourceFileName);
         addCliArgsToSystemProperties(args);
         addPropertiesToSystemProperties(properties);
 
@@ -113,8 +121,8 @@ public final class D2D2 {
     public static Engine createEngine(String engineClassName, int width, int height, String titleText) {
         try {
             Engine engine = (Engine) Class.forName(engineClassName)
-                .getConstructor(int.class, int.class, String.class)
-                .newInstance(width, height, titleText);
+                    .getConstructor(int.class, int.class, String.class)
+                    .newInstance(width, height, titleText);
 
             return engine;
         } catch (ReflectiveOperationException e) {
@@ -122,10 +130,10 @@ public final class D2D2 {
         }
     }
 
-    private static void readPropertyFileIfExist() {
+    private static void readPropertyFileIfExist(String propertiesResourceFileName) {
         InputStream inputStream = D2D2.class
-            .getClassLoader()
-            .getResourceAsStream(PROPERTIES_FILENAME);
+                .getClassLoader()
+                .getResourceAsStream(propertiesResourceFileName);
 
         if (inputStream != null) {
             try {
@@ -135,6 +143,8 @@ public final class D2D2 {
             } catch (IOException e) {
                 throw new IllegalStateException(e);
             }
+        } else {
+            System.err.printf("Property file %s not found%n", propertiesResourceFileName);
         }
     }
 
@@ -202,7 +212,7 @@ public final class D2D2 {
         engine().removeEventListener(D2D2.class, Event.RESIZE);
         if (noScaleMode) {
             engine().addEventListener(D2D2.class, Event.RESIZE, event ->
-                stage().setSize(engine().getCanvasWidth(), engine().getCanvasHeight())
+                    stage().setSize(engine().getCanvasWidth(), engine().getCanvasHeight())
             );
         }
     }
