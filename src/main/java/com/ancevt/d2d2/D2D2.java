@@ -37,6 +37,7 @@ import lombok.NoArgsConstructor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Properties;
 
 import static com.ancevt.commons.string.ConvertableString.convert;
@@ -59,10 +60,15 @@ public final class D2D2 {
     private static boolean noScaleMode;
 
     public static void init(Class<? extends D2D2Application> d2d2EntryPointClass, String[] args) {
+        init(d2d2EntryPointClass, args, Map.of());
+    }
+
+    public static void init(Class<? extends D2D2Application> d2d2EntryPointClass, String[] args, Map<String, String> properties) {
         D2D2.args = Args.of(args);
 
         readPropertyFileIfExist();
         addCliArgsToSystemProperties(args);
+        addPropertiesToSystemProperties(properties);
 
         if (Arrays.asList(args).contains("--lwjgl")) {
             System.setProperty("d2d2.engine", "com.ancevt.d2d2.engine.lwjgl.LwjglEngine");
@@ -83,6 +89,10 @@ public final class D2D2 {
         entryPoint.onCreate(stage);
         D2D2.loop();
         entryPoint.onDispose();
+    }
+
+    private static void addPropertiesToSystemProperties(Map<String, String> properties) {
+        properties.forEach(System::setProperty);
     }
 
     public static Stage createStage(Engine engine) {
